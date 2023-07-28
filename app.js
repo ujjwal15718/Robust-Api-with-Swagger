@@ -4,9 +4,6 @@ const swaggerDocument = require('./swagger.json');
 const express = require('express');
 const app = express();
 
-// const isAdmin = require('./middlware/role');
-// const deleteCandidateFunction = require('./middlware/identify'); // Import the Axios code
-
 port = 8000;
 app.use(express.json())
 
