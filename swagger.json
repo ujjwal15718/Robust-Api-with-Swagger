@@ -1,0 +1,319 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Node.js CRUD API",
+    "description": "Documentation for the Node.js CRUD API",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "schemes": ["http", "https"],
+  "paths": {
+    "/candidate_create": {
+      "post": {
+        "summary": "Create a new item",
+        "parameters": [
+          {
+            "name": "itemData",
+            "in": "body",
+            "description": "Data of the new item",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "New Item"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "Email of the new item"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Item created successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/candidate_delete/{id}": {
+      "delete": {
+        "summary": "Delete a candidate",
+        "parameters": [
+          {
+            "name": "admin",
+            "in": "query",
+            "description": "admin ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the candidate to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully deleted"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+      
+    },
+    "/candidate_show": {
+      "get": {
+        "summary": "Get candidates",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Filter candidates by email",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination",
+            "type": "integer",
+            "default": 1
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "Number of items per page",
+            "type": "integer",
+            "default": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "totalPages": {
+                  "type": "integer"
+                },
+                "currentPage": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },    
+    
+    "/candidate_update/{id}": {
+      "put": {
+        "summary": "Update candidates by their unique id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the candidate to retrieve",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "candidateData",
+            "in": "body",
+            "description": "Candidate data to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "enter the new name"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "enter the new email"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidate updated successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    
+    "/book/books_post/{candidate_id}": {
+      "post": {
+        "summary": "Add books by candidates",
+        "parameters": [
+          {
+            "name": "candidate_id",  
+            "in": "path", 
+            "description": "ID of the candidate to add books for", 
+            "required": true,
+            "type": "integer",
+            "format": "int64" 
+          },
+          {
+            "name": "bookData",  
+            "in": "body", 
+            "description": "Data of the new book",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "book_title": {
+                  "type": "string",
+                  "example": "title"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "description"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book added successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/book/books_show/{candidate_id}": {
+      "get": {
+        "summary": "Get books by candidate",
+        "parameters": [
+          {
+            "name": "candidate_id",  
+            "in": "path", 
+            "description": "ID of the candidate to retrieve books for", 
+            "required": true,
+            "type": "integer",
+            "format": "int64" 
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/book/book_update/{id}": {
+      "put": {
+        "summary": "Update books details by their unique id",
+        "parameters": [
+          
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "ID of a book to retrieve",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "book_title",
+            "in": "body",
+            "description": "tile data to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "book_title": {
+                  "type": "string",
+                  "example": "title"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "description"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "updated successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+
+    "/book/books_delete/{id}": {
+      "delete": {
+        "summary": "Delete a record",
+        "parameters": [
+          {
+            "name": "admin",
+            "in": "query",
+            "description": "admin ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the candidate to delete",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "deleted successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
